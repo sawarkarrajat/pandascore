@@ -1,0 +1,26 @@
+@use 'base';
+
+#main-container {
+  min-height: 88vh;
+}
+
+header {
+  @extend %d-flex-r;
+  justify-content: flex-start;
+  padding: 0 40px;
+  color: white;
+  font-size: 2em;
+  font-weight: 400;
+  height: 12vh;
+  background: #373b44; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #4286f4,
+    #373b44
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #4286f4,
+    #373b44
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
