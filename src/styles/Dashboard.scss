@@ -1,0 +1,16 @@
+@use 'base';
+
+.dashboard__userInfo {
+  position: absolute;
+  right: 40px;
+  top: 4vh;
+  color: white;
+  font-weight: lighter;
+}
+
+.dashboard__mainSection {
+  @extend %d-flex-c;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2em 8em;
+}
