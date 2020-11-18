@@ -10,7 +10,16 @@
 
 .dashboard__mainSection {
   @extend %d-flex-c;
+  padding: 2em 8em;
+  width: 100%;
+  height: 88vh;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 2em 8em;
+}
+
+.dashboard__searchPanel {
+  @extend %d-flex-r;
+  width: 100%;
+  height: 8vh;
+  justify-content: flex-end;
 }

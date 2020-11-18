@@ -1,45 +1,32 @@
 import React, { useState } from "react";
-import { Button, Alert } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { Form } from "react-bootstrap";
 import "../styles/Dashboard.scss";
-
-const Userpanel = () => {
-  const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
-  const history = useHistory();
-
-  async function handleLogout() {
-    setError("");
-    try {
-      await logout();
-      history.push("/login");
-    } catch {
-      setError("Failed to log out");
-    }
-  }
-
-  return (
-    <>
-      <div className="dashboard__userInfo d-flex align-items-center justify-content-center">
-        <strong>{currentUser.email}</strong>
-        <Link to="/update-profile" className="btn btn-light btn-sm ml-2 mr-2">
-          Update Profile
-        </Link>
-        <Button variant="light" size="sm" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </div>
-      {error && <Alert variant="danger">{error}</Alert>}
-    </>
-  );
-};
+import Userpanel from "./Userpanel";
 
 export default function Dashboard() {
+  const [searchText, setSearchText] = useState("");
+  function handleSearchText(e) {
+    e.preventDefault();
+    setSearchText(e.target.value);
+    console.log(searchText);
+  }
+  function handleSubmit() {}
   return (
     <>
       <Userpanel />
-      <div className="dashboard__mainSection">asdf</div>
+      <div className="dashboard__mainSection">
+        <div className="dashboard__searchPanel">
+          <Form.Group onSubmit={handleSubmit}>
+            <Form.Control
+              className="dashboard__searchInput"
+              type="text"
+              onChange={(e) => handleSearchText(e)}
+              placeholder="type here to search..."
+              value={searchText}
+            />
+          </Form.Group>
+        </div>
+      </div>
     </>
   );
 }
