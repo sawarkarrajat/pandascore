@@ -2,13 +2,12 @@
  * initial state for reducer
  */
 export const initialState = {
-  brandFiltersArray: [],
-  tagFiltersArray: [],
-  clearFilter: false,
-  priceMin: null,
-  priceMax: null,
-  rating: null,
-  clicked: {},
+  championsArray: [],
+  selectedChampions: [],
+  searchedTerm: "",
+  current_Page: 0,
+  sortedUsing: "name",
+  sortingOrder: "desc",
 };
 /**
  * a Reducer to maintain global state with the help of
@@ -19,21 +18,13 @@ export const initialState = {
  */
 const Reducer = (state, action) => {
   switch (action.type) {
-    case "ADD_TO_BRAND_FILTER":
+    case "UPDATE_CHAMPIONS":
+      console.log("in update");
       return {
         ...state,
-        brandFiltersArray: [...state.brandFiltersArray, action.item.label],
+        championsArray: action.payload,
       };
 
-    case "REMOVE_FROM_BRAND_FILTER":
-      return {
-        ...state,
-        brandFiltersArray: [
-          ...state.brandFiltersArray.filter(
-            (element) => element !== action.item.label
-          ),
-        ],
-      };
     default:
       return state;
   }

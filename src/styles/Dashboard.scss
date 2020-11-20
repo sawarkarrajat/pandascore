@@ -23,3 +23,40 @@
   height: 8vh;
   justify-content: flex-end;
 }
+.dashboard__searchInput {
+  width: 30%;
+}
+
+.dashboard__displayTable {
+  @extend %d-flex-r;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: -9px 9px 18px #d1d1d1, 9px -9px 18px #ffffff,
+    9px -9px 18px #d1d1d1, -9px 9px 18px #ffffff;
+  margin-bottom: 50px;
+  table {
+    border-radius: 8px;
+    overflow: hidden;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    thead > tr {
+      background: #4286f42d; /* fallback for old browsers */
+    }
+    th {
+      font-weight: 500;
+    }
+    th,
+    td {
+      padding: 5px 0;
+    }
+    tbody > tr:nth-last-child(1) > td {
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.dashboard__displayTable table td:nth-child(2) {
+  text-align: left;
+}

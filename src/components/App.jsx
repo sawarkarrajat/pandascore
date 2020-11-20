@@ -7,6 +7,8 @@ import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import { StateProvider } from "../contexts/StateProvider";
+import reducer, { initialState } from "../contexts/Reducer";
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
       <Router>
         <Switch>
           <AuthProvider>
-            <PrivateRoute path="/" exact component={Dashboard} />
+            <StateProvider initialState={initialState} reducer={reducer}>
+              <PrivateRoute path="/" exact component={Dashboard} />
+            </StateProvider>
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
             <Route path="/forgot-password" component={ForgotPassword} />
