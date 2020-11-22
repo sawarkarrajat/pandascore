@@ -10,9 +10,9 @@
 
 .dashboard__mainSection {
   @extend %d-flex-c;
-  padding: 2em 8em;
+  padding: 2em 8em 0em 8em;
   width: 100%;
-  height: 88vh;
+  height: auto;
   justify-content: flex-start;
   align-items: flex-start;
 }
@@ -20,11 +20,14 @@
 .dashboard__searchPanel {
   @extend %d-flex-r;
   width: 100%;
-  height: 8vh;
-  justify-content: flex-end;
+  height: 10vh;
+  justify-content: space-between;
 }
 .dashboard__searchInput {
   width: 30%;
+}
+.dashboard__searchInput.form-group {
+  margin: 0;
 }
 
 .dashboard__displayTable {
@@ -32,20 +35,33 @@
   width: 100%;
   background: #ffffff;
   border-radius: 8px;
-  box-shadow: -9px 9px 18px #d1d1d1, 9px -9px 18px #ffffff,
-    9px -9px 18px #d1d1d1, -9px 9px 18px #ffffff;
-  margin-bottom: 50px;
+  box-shadow: 12px 14px 9px 0px #d1d1d159, -13px 13px 9px 0px #d1d1d159;
+  margin-bottom: 1.8em;
   table {
     border-radius: 8px;
     overflow: hidden;
     border-collapse: collapse;
     width: 100%;
     text-align: center;
+    tbody > tr {
+      border-bottom: 0.5px solid #dddddd40;
+      cursor: default;
+    }
     thead > tr {
       background: #4286f42d; /* fallback for old browsers */
     }
     th {
       font-weight: 500;
+      color: darkblue;
+      cursor: pointer;
+    }
+    th:hover {
+      border-radius: 8px;
+      background: #3a81f52d;
+    }
+    th:nth-last-child(1),
+    th:first-child {
+      cursor: not-allowed;
     }
     th,
     td {
@@ -54,9 +70,24 @@
     tbody > tr:nth-last-child(1) > td {
       padding-bottom: 10px;
     }
+    tbody > tr:hover {
+      border-radius: 8px;
+      background: #dedede31;
+    }
   }
 }
 
-.dashboard__displayTable table td:nth-child(2) {
+.dashboard__displayTable table > tbody > tr > td:nth-child(2) {
   text-align: left;
+}
+
+.dashboard__pagination {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  .pagination__button,
+  Button {
+    margin: 0 5px;
+    box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 8px 0 rgba(0, 0, 0, 0.19);
+  }
 }

@@ -1,0 +1,16 @@
+@use 'base';
+
+.dashboard__displayTable.watchlist__table {
+  table {
+    th {
+      cursor: not-allowed;
+    }
+    th:hover {
+      background: none;
+    }
+    tbody > tr:hover {
+      border-radius: 8px;
+      background: #dedede31;
+    }
+  }
+}

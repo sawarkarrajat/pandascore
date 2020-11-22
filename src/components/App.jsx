@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import "../styles/App.scss";
 import Dashboard from "./Dashboard";
+import Watchlist from "./Watchlist";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
@@ -19,6 +20,7 @@ function App() {
           <AuthProvider>
             <StateProvider initialState={initialState} reducer={reducer}>
               <PrivateRoute path="/" exact component={Dashboard} />
+              <PrivateRoute path="/Watchlist" component={Watchlist} />
             </StateProvider>
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={Login} />
