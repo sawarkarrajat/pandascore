@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Button, Badge, InputGroup } from "react-bootstrap";
+import { Form, Button, Badge, InputGroup, Spinner } from "react-bootstrap";
 import { initialFetch, searchFetch } from "../services/apiServices";
 import "../styles/Dashboard.scss";
 import Userpanel from "./Userpanel";
 import { useStateValue } from "./../contexts/StateProvider";
+import ChampionDetails from "./ChampionDetails";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
+  const [open, setOpen] = useState(false);
+  const [clickedChampion, setClickedChampion] = useState();
   const [
     {
       championsArray,
@@ -148,7 +150,7 @@ export default function Dashboard() {
     setLoading(false);
   };
   const handleWatchlist = () => {
-    history.replace("/watchlist");
+    history.push("/watchlist");
   };
   const checkAddRemove = (id) => {
     if (selectedChampions.some((item) => item.id === id)) {
@@ -178,8 +180,30 @@ export default function Dashboard() {
     });
     setSearchText("");
   };
+  const handleChampionDetails = (e, champ) => {
+    e.preventDefault();
+    setOpen(true);
+    setClickedChampion(champ);
+  };
+  const checkSortedUsing = (tag) => {
+    let style = { color: null };
+    if (sortedUsing === tag) {
+      style.color = "#002bff";
+      return style;
+    } else {
+      return style;
+    }
+  };
   return (
     <>
+      <ChampionDetails
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setClickedChampion({});
+        }}
+        champion={clickedChampion}
+      />
       <Userpanel />
       <div className="dashboard__mainSection">
         <div className="dashboard__searchPanel">
@@ -199,6 +223,7 @@ export default function Dashboard() {
                 <Button
                   variant="outline-secondary"
                   onClick={(e) => handleClearText(e)}
+                  style={{ backgroundColor: "#b9dfff" }}
                 >
                   clear
                 </Button>
@@ -207,7 +232,12 @@ export default function Dashboard() {
           </Form.Group>
         </div>
         {loading ? (
-          <h2>loading...</h2>
+          <h2>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+            loading...
+          </h2>
         ) : pageContainer.length > 0 ? (
           <div className="dashboard__displayTable">
             <table>
@@ -215,45 +245,37 @@ export default function Dashboard() {
                 <tr>
                   <th>avatar</th>
                   <th
-                    style={{ color: sortedUsing === "name" ? "#002bff" : "" }}
+                    style={checkSortedUsing("name")}
                     onClick={() => handleSort("name")}
                   >
                     name
                   </th>
                   <th
-                    style={{ color: sortedUsing === "armor" ? "#002bff" : "" }}
+                    style={checkSortedUsing("armor")}
                     onClick={() => handleSort("armor")}
                   >
                     armor
                   </th>
                   <th
-                    style={{
-                      color: sortedUsing === "attackdamage" ? "#002bff" : "",
-                    }}
+                    style={checkSortedUsing("attackdamage")}
                     onClick={() => handleSort("attackdamage")}
                   >
                     attack damage
                   </th>
                   <th
-                    style={{
-                      color: sortedUsing === "attackrange" ? "#002bff" : "",
-                    }}
+                    style={checkSortedUsing("attackrange")}
                     onClick={() => handleSort("attackrange")}
                   >
                     attack range
                   </th>
                   <th
-                    style={{
-                      color: sortedUsing === "hpperlevel" ? "#002bff" : "",
-                    }}
+                    style={checkSortedUsing("hpperlevel")}
                     onClick={() => handleSort("hpperlevel")}
                   >
                     hp / level
                   </th>
                   <th
-                    style={{
-                      color: sortedUsing === "spellblock" ? "#002bff" : "",
-                    }}
+                    style={checkSortedUsing("spellblock")}
                     onClick={() => handleSort("spellblock")}
                   >
                     spell block
@@ -273,7 +295,9 @@ export default function Dashboard() {
                           height="20px"
                         />
                       </td>
-                      <td>{_champion.name}</td>
+                      <td onClick={(e) => handleChampionDetails(e, _champion)}>
+                        {_champion.name}
+                      </td>
                       <td>{_champion.armor}</td>
                       <td>{_champion.attackdamage}</td>
                       <td>{_champion.attackrange}</td>
@@ -305,7 +329,12 @@ export default function Dashboard() {
             </table>
           </div>
         ) : (
-          <h2>nothing found...</h2>
+          <h2>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+            nothing found...
+          </h2>
         )}
         {pageContainer.length > 1 && (
           <div className="dashboard__pagination">

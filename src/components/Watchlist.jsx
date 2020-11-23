@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "../styles/Dashboard.scss";
 import "../styles/Watchlist.scss";
 import { useStateValue } from "./../contexts/StateProvider";
+import ChampionDetails from "./ChampionDetails";
 
 function Watchlist() {
   const [{ selectedChampions }, dispatch] = useStateValue();
+  const [open, setOpen] = useState(false);
+  const [clickedChampion, setClickedChampion] = useState();
+
   const history = useHistory();
   const handleDashboard = (e) => {
     e.preventDefault();
-    history.replace("/");
+    history.push("/");
   };
   const handleRemove = (champ) => {
     dispatch({
@@ -18,8 +22,21 @@ function Watchlist() {
       payload: champ.id,
     });
   };
+  const handleChampionDetails = (e, champ) => {
+    e.preventDefault();
+    setOpen(true);
+    setClickedChampion(champ);
+  };
   return (
     <>
+      <ChampionDetails
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setClickedChampion({});
+        }}
+        champion={clickedChampion}
+      />
       <div className="dashboard__mainSection">
         <div className="dashboard__searchPanel">
           <Button variant="dark" onClick={(e) => handleDashboard(e)}>
@@ -52,7 +69,9 @@ function Watchlist() {
                         height="20px"
                       />
                     </td>
-                    <td>{_champion.name}</td>
+                    <td onClick={(e) => handleChampionDetails(e, _champion)}>
+                      {_champion.name}
+                    </td>
                     <td>{_champion.armor}</td>
                     <td>{_champion.attackdamage}</td>
                     <td>{_champion.attackrange}</td>

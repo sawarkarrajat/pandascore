@@ -1,0 +1,61 @@
+@use 'base';
+
+.loading {
+  background: transparent
+    url("http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif")
+    center no-repeat;
+}
+.championDetails__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.championDetails__container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  z-index: 1000;
+  height: 80%;
+  width: 60%;
+  display: flex;
+  border-radius: 8px;
+}
+.championDetails__imgContainer {
+  @extend %d-flex-c;
+  border-radius: 8px;
+  width: 40%;
+  height: 100%;
+  padding: 30px;
+  background-color: black;
+}
+.championDetails__img {
+  height: inherit;
+  border-radius: 8px;
+  box-shadow: 0 0px 8px 0px white;
+}
+.championDetails__textContainer {
+  @extend %d-flex-c;
+  padding: 30px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 60%;
+  height: 100%;
+  color: #343a40 !important;
+}
+
+.championDetails__textContainer {
+  h1 {
+    align-self: flex-end;
+  }
+}
+
+p.championDetails__text {
+  margin-bottom: 5px !important;
+}
