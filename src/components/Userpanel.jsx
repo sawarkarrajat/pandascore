@@ -3,12 +3,18 @@ import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "../styles/Dashboard.scss";
-
+/**
+ * userPanel component contains current user and logout and update profile buttons
+ * @property {Function}
+ */
 export default function Userpanel() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
-
+  /**
+   * handles the logging out process
+   * @property {Function}
+   */
   async function handleLogout() {
     setError("");
     try {

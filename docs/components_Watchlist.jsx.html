@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Watchlist.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Watchlist.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import "../styles/Dashboard.scss";
+import "../styles/Watchlist.scss";
+import { useStateValue } from "./../contexts/StateProvider";
+import ChampionDetails from "./ChampionDetails";
+/**
+ * watchlist component
+ * @property {Function}
+ */
+function Watchlist() {
+  const [{ selectedChampions }, dispatch] = useStateValue();
+  const [open, setOpen] = useState(false);
+  const [clickedChampion, setClickedChampion] = useState();
+
+  const history = useHistory();
+  /**
+   * toggle button to switch between dashboard and watchlist
+   * @param {Event} e event
+   */
+  const handleDashboard = (e) => {
+    e.preventDefault();
+    history.push("/");
+  };
+
+  /**
+   *method to remove champion from selected and watchlist
+   * @param {String} id
+   */
+  const handleRemove = (id) => {
+    dispatch({
+      type: "REMOVE_CHAMPION_FROM_WATCHLIST",
+      payload: id,
+    });
+  };
+
+  /**
+   * method to open dialogue and push champions details as prop
+   * @param {Event} e
+   * @param {Object} champ champion with details in json
+   */
+  const handleChampionDetails = (e, champ) => {
+    e.preventDefault();
+    setOpen(true);
+    setClickedChampion(champ);
+  };
+  return (
+    &lt;>
+      &lt;ChampionDetails
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setClickedChampion({});
+        }}
+        champion={clickedChampion}
+      />
+      &lt;div className="dashboard__mainSection">
+        &lt;div className="dashboard__searchPanel">
+          &lt;Button variant="dark" onClick={(e) => handleDashboard(e)}>
+            go to Dashboard
+          &lt;/Button>
+        &lt;/div>
+        {selectedChampions.length > 0 ? (
+          &lt;div className="dashboard__displayTable watchlist__table">
+            &lt;table>
+              &lt;thead>
+                &lt;tr>
+                  &lt;th>avatar&lt;/th>
+                  &lt;th>name&lt;/th>
+                  &lt;th>armor&lt;/th>
+                  &lt;th>attack damage&lt;/th>
+                  &lt;th>attack range&lt;/th>
+                  &lt;th>hp / level&lt;/th>
+                  &lt;th>spell block&lt;/th>
+                  &lt;th>watchlist&lt;/th>
+                &lt;/tr>
+              &lt;/thead>
+              &lt;tbody>
+                {selectedChampions.map((_champion) => (
+                  &lt;tr key={_champion.id}>
+                    &lt;td>
+                      &lt;img
+                        src={_champion.image_url}
+                        alt={_champion.name}
+                        width="30px"
+                        height="30px"
+                      />
+                    &lt;/td>
+                    &lt;td onClick={(e) => handleChampionDetails(e, _champion)}>
+                      {_champion.name}
+                    &lt;/td>
+                    &lt;td>{_champion.armor}&lt;/td>
+                    &lt;td>{_champion.attackdamage}&lt;/td>
+                    &lt;td>{_champion.attackrange}&lt;/td>
+                    &lt;td>{_champion.hpperlevel}&lt;/td>
+                    &lt;td>{_champion.spellblock}&lt;/td>
+                    &lt;td>
+                      {
+                        &lt;Button
+                          size="sm"
+                          variant="danger"
+                          onClick={() => handleRemove(_champion.id)}
+                        >
+                          Remove
+                        &lt;/Button>
+                      }
+                    &lt;/td>
+                  &lt;/tr>
+                ))}
+              &lt;/tbody>
+            &lt;/table>
+          &lt;/div>
+        ) : (
+          &lt;h2>please select a champion from dashboard...&lt;/h2>
+        )}
+      &lt;/div>
+    &lt;/>
+  );
+}
+
+export default Watchlist;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#initialFetch">initialFetch</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#searchFetch">searchFetch</a></li><li><a href="global.html#StateContext">StateContext</a></li><li><a href="global.html#StateProvider">StateProvider</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useStateValue">useStateValue</a></li><li><a href="global.html#Watchlist">Watchlist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Nov 24 2020 23:29:45 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

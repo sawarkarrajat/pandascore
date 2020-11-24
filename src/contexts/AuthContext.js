@@ -1,12 +1,20 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "./../firebase";
-
+/**
+ * @type {context}
+ */
 const AuthContext = createContext();
-
+/**
+ * decorative method to make use Auth simple
+ * @returns {context}
+ */
 export function useAuth() {
   return useContext(AuthContext);
 }
-
+/**
+ * Auth provider method
+ * @param {Element} children
+ */
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -34,7 +42,9 @@ export function AuthProvider({ children }) {
   function updatePassword(password) {
     return currentUser.updatePassword(password);
   }
-
+  /**
+   * a side effect that observes current user state change
+   */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);

@@ -33,12 +33,11 @@
   width: 40%;
   height: 100%;
   padding: 30px;
-  background-color: black;
 }
 .championDetails__img {
   height: inherit;
   border-radius: 8px;
-  box-shadow: 0 0px 8px 0px white;
+  box-shadow: 0 0px 20px 20px #007bff69;
 }
 .championDetails__textContainer {
   @extend %d-flex-c;

@@ -1,4 +1,32 @@
-import React, { useEffect, useState, useCallback } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Dashboard.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Dashboard.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Button, Badge, InputGroup, Spinner } from "react-bootstrap";
 import { initialFetch, searchFetch } from "../services/apiServices";
@@ -44,8 +72,8 @@ export default function Dashboard() {
     var cursor = 0;
     let tempContainer = [];
     setPageContainer([]);
-    for (let index = 0; index < totalNoOfPages; index++) {
-      for (let item = 0; item < 10; item++) {
+    for (let index = 0; index &lt; totalNoOfPages; index++) {
+      for (let item = 0; item &lt; 10; item++) {
         if (champions[cursor] !== undefined) {
           itemsArray.push(champions[cursor]);
           cursor++;
@@ -161,10 +189,10 @@ export default function Dashboard() {
       let y = b[key_to_sort_by];
       if (sortingOrder === "asc") {
         console.log("sorting in asc order");
-        return x < y ? -1 : x > y ? 1 : 0;
+        return x &lt; y ? -1 : x > y ? 1 : 0;
       } else {
         console.log("sorting in desc order");
-        return x > y ? -1 : x < y ? 1 : 0;
+        return x > y ? -1 : x &lt; y ? 1 : 0;
       }
     };
     const sortedChampions = champions.sort(sortByKey);
@@ -267,8 +295,8 @@ export default function Dashboard() {
     }
   };
   return (
-    <>
-      <ChampionDetails
+    &lt;>
+      &lt;ChampionDetails
         open={open}
         onClose={() => {
           setOpen(false);
@@ -276,104 +304,104 @@ export default function Dashboard() {
         }}
         champion={clickedChampion}
       />
-      <Userpanel />
-      <div className="dashboard__mainSection">
-        <div className="dashboard__searchPanel">
-          <Button variant="dark" onClick={handleWatchlist}>
-            go to Watchlist&nbsp;
-            <Badge variant="light">{selectedChampions.length}</Badge>
-          </Button>
-          <Form.Group className="dashboard__searchInput">
-            <InputGroup>
-              <Form.Control
+      &lt;Userpanel />
+      &lt;div className="dashboard__mainSection">
+        &lt;div className="dashboard__searchPanel">
+          &lt;Button variant="dark" onClick={handleWatchlist}>
+            go to Watchlist&amp;nbsp;
+            &lt;Badge variant="light">{selectedChampions.length}&lt;/Badge>
+          &lt;/Button>
+          &lt;Form.Group className="dashboard__searchInput">
+            &lt;InputGroup>
+              &lt;Form.Control
                 type="text"
                 onChange={(e) => handleSearchText(e)}
                 placeholder="type here to search..."
                 value={searchText}
               />
-              <InputGroup.Append>
-                <Button variant="dark" onClick={(e) => handleClearText(e)}>
+              &lt;InputGroup.Append>
+                &lt;Button variant="dark" onClick={(e) => handleClearText(e)}>
                   clear
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </Form.Group>
-        </div>
+                &lt;/Button>
+              &lt;/InputGroup.Append>
+            &lt;/InputGroup>
+          &lt;/Form.Group>
+        &lt;/div>
         {loading ? (
-          <h2>
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
+          &lt;h2>
+            &lt;Spinner animation="border" role="status">
+              &lt;span className="sr-only">Loading...&lt;/span>
+            &lt;/Spinner>
             loading...
-          </h2>
+          &lt;/h2>
         ) : pageContainer.length > 0 ? (
-          <div className="dashboard__displayTable">
-            <table>
-              <thead>
-                <tr>
-                  <th>avatar</th>
-                  <th
+          &lt;div className="dashboard__displayTable">
+            &lt;table>
+              &lt;thead>
+                &lt;tr>
+                  &lt;th>avatar&lt;/th>
+                  &lt;th
                     style={checkSortedUsing("name")}
                     onClick={() => handleSort("name")}
                   >
                     name
-                  </th>
-                  <th
+                  &lt;/th>
+                  &lt;th
                     style={checkSortedUsing("armor")}
                     onClick={() => handleSort("armor")}
                   >
                     armor
-                  </th>
-                  <th
+                  &lt;/th>
+                  &lt;th
                     style={checkSortedUsing("attackdamage")}
                     onClick={() => handleSort("attackdamage")}
                   >
                     attack damage
-                  </th>
-                  <th
+                  &lt;/th>
+                  &lt;th
                     style={checkSortedUsing("attackrange")}
                     onClick={() => handleSort("attackrange")}
                   >
                     attack range
-                  </th>
-                  <th
+                  &lt;/th>
+                  &lt;th
                     style={checkSortedUsing("hpperlevel")}
                     onClick={() => handleSort("hpperlevel")}
                   >
                     hp / level
-                  </th>
-                  <th
+                  &lt;/th>
+                  &lt;th
                     style={checkSortedUsing("spellblock")}
                     onClick={() => handleSort("spellblock")}
                   >
                     spell block
-                  </th>
-                  <th>watchlist</th>
-                </tr>
-              </thead>
-              <tbody>
+                  &lt;/th>
+                  &lt;th>watchlist&lt;/th>
+                &lt;/tr>
+              &lt;/thead>
+              &lt;tbody>
                 {pageContainer[currentPage]?.length > 0 ? (
                   pageContainer[currentPage].map((_champion) => (
-                    <tr key={_champion.id}>
-                      <td>
-                        <img
+                    &lt;tr key={_champion.id}>
+                      &lt;td>
+                        &lt;img
                           src={_champion.image_url}
                           alt={_champion.name}
                           width="30px"
                           height="30px"
                         />
-                      </td>
-                      <td onClick={(e) => handleChampionDetails(e, _champion)}>
+                      &lt;/td>
+                      &lt;td onClick={(e) => handleChampionDetails(e, _champion)}>
                         {_champion.name}
-                      </td>
-                      <td>{_champion.armor}</td>
-                      <td>{_champion.attackdamage}</td>
-                      <td>{_champion.attackrange}</td>
-                      <td>{_champion.hpperlevel}</td>
-                      <td>{_champion.spellblock}</td>
-                      <td>
+                      &lt;/td>
+                      &lt;td>{_champion.armor}&lt;/td>
+                      &lt;td>{_champion.attackdamage}&lt;/td>
+                      &lt;td>{_champion.attackrange}&lt;/td>
+                      &lt;td>{_champion.hpperlevel}&lt;/td>
+                      &lt;td>{_champion.spellblock}&lt;/td>
+                      &lt;td>
                         {
-                          <Button
+                          &lt;Button
                             size="sm"
                             variant={
                               checkAddRemove(_champion.id) === "add"
@@ -383,27 +411,27 @@ export default function Dashboard() {
                             onClick={() => handleAddRemove(_champion)}
                           >
                             {checkAddRemove(_champion.id)}
-                          </Button>
+                          &lt;/Button>
                         }
-                      </td>
-                    </tr>
+                      &lt;/td>
+                    &lt;/tr>
                   ))
                 ) : (
-                  <tr>
-                    <td>{error}</td>
-                  </tr>
+                  &lt;tr>
+                    &lt;td>{error}&lt;/td>
+                  &lt;/tr>
                 )}
-              </tbody>
-            </table>
-          </div>
+              &lt;/tbody>
+            &lt;/table>
+          &lt;/div>
         ) : (
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
+          &lt;Spinner animation="border" role="status">
+            &lt;span className="sr-only">Loading...&lt;/span>
+          &lt;/Spinner>
         )}
-        {pageContainer.length > 1 && (
-          <div className="dashboard__pagination">
-            <Button
+        {pageContainer.length > 1 &amp;&amp; (
+          &lt;div className="dashboard__pagination">
+            &lt;Button
               id="btn_first"
               variant="primary"
               size="sm"
@@ -412,10 +440,10 @@ export default function Dashboard() {
               }}
             >
               first
-            </Button>
+            &lt;/Button>
 
             {pageContainer.map((item, index) => (
-              <Button
+              &lt;Button
                 className="pagination__button"
                 key={index}
                 id={"btn_" + index}
@@ -429,10 +457,10 @@ export default function Dashboard() {
                 }
               >
                 {index + 1}
-              </Button>
+              &lt;/Button>
             ))}
 
-            <Button
+            &lt;Button
               id="btn_last"
               variant="primary"
               size="sm"
@@ -441,10 +469,33 @@ export default function Dashboard() {
               }}
             >
               last
-            </Button>
-          </div>
+            &lt;/Button>
+          &lt;/div>
         )}
-      </div>
-    </>
+      &lt;/div>
+    &lt;/>
   );
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#initialFetch">initialFetch</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#searchFetch">searchFetch</a></li><li><a href="global.html#StateContext">StateContext</a></li><li><a href="global.html#StateProvider">StateProvider</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useStateValue">useStateValue</a></li><li><a href="global.html#Watchlist">Watchlist</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Nov 24 2020 23:29:45 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -3,7 +3,11 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
+import Background from "./Background";
+/**
+ * login component
+ * @property {Function}
+ */
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -12,6 +16,10 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
+  /**
+   * handle submit action for login form
+   * @param {Event} e event
+   */
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -32,6 +40,7 @@ export default function Login() {
       id="main-container"
       className="d-flex align-items-center justify-content-center"
     >
+      <Background />
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body>

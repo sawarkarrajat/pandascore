@@ -3,7 +3,11 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
+import Background from "./Background";
+/**
+ * Forgot password component
+ * @property {Function}
+ */
 export default function ForgotPassword() {
   const emailRef = useRef();
   const { resetPassword } = useAuth();
@@ -11,9 +15,12 @@ export default function ForgotPassword() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * handle submit action for forgot password form
+   * @param {Event} e event
+   */
   async function handleSubmit(e) {
     e.preventDefault();
-
     try {
       setMessage("");
       setError("");
@@ -22,9 +29,9 @@ export default function ForgotPassword() {
       setMessage("Check your inbox for further instructions");
     } catch {
       setError("Failed to reset password");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   return (
@@ -32,6 +39,7 @@ export default function ForgotPassword() {
       id="main-container"
       className="d-flex align-items-center justify-content-center"
     >
+      <Background />
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body>

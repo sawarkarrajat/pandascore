@@ -3,7 +3,11 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
+import Background from "./Background";
+/**
+ * sign up form component
+ * @property {Function}
+ */
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -13,6 +17,10 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
+  /**
+   * handle submit action for signup form
+   * @param {Event} e event
+   */
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -37,6 +45,7 @@ export default function Signup() {
       id="main-container"
       className="d-flex align-items-center justify-content-center"
     >
+      <Background />
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body>

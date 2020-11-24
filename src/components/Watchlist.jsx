@@ -5,23 +5,41 @@ import "../styles/Dashboard.scss";
 import "../styles/Watchlist.scss";
 import { useStateValue } from "./../contexts/StateProvider";
 import ChampionDetails from "./ChampionDetails";
-
+/**
+ * watchlist component
+ * @property {Function}
+ */
 function Watchlist() {
   const [{ selectedChampions }, dispatch] = useStateValue();
   const [open, setOpen] = useState(false);
   const [clickedChampion, setClickedChampion] = useState();
 
   const history = useHistory();
+  /**
+   * toggle button to switch between dashboard and watchlist
+   * @param {Event} e event
+   */
   const handleDashboard = (e) => {
     e.preventDefault();
     history.push("/");
   };
-  const handleRemove = (champ) => {
+
+  /**
+   *method to remove champion from selected and watchlist
+   * @param {String} id
+   */
+  const handleRemove = (id) => {
     dispatch({
       type: "REMOVE_CHAMPION_FROM_WATCHLIST",
-      payload: champ.id,
+      payload: id,
     });
   };
+
+  /**
+   * method to open dialogue and push champions details as prop
+   * @param {Event} e
+   * @param {Object} champ champion with details in json
+   */
   const handleChampionDetails = (e, champ) => {
     e.preventDefault();
     setOpen(true);
@@ -65,8 +83,8 @@ function Watchlist() {
                       <img
                         src={_champion.image_url}
                         alt={_champion.name}
-                        width="20px"
-                        height="20px"
+                        width="30px"
+                        height="30px"
                       />
                     </td>
                     <td onClick={(e) => handleChampionDetails(e, _champion)}>
@@ -82,7 +100,7 @@ function Watchlist() {
                         <Button
                           size="sm"
                           variant="danger"
-                          onClick={() => handleRemove(_champion)}
+                          onClick={() => handleRemove(_champion.id)}
                         >
                           Remove
                         </Button>

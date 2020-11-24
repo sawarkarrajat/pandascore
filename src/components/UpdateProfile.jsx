@@ -3,7 +3,11 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
+import Background from "./Background";
+/**
+ * update profile form component
+ * @property {Function}
+ */
 export default function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -12,13 +16,16 @@ export default function UpdateProfile() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
+  /**
+   * handle submit action for update profile form
+   * @param {Event} e event
+   */
   function handleSubmit(e) {
     e.preventDefault();
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match");
     }
-
+    //array of promises
     const promises = [];
     setLoading(true);
     setError("");
@@ -32,13 +39,12 @@ export default function UpdateProfile() {
 
     Promise.all(promises)
       .then(() => {
+        setLoading(false);
         history.push("/");
       })
       .catch(() => {
-        setError("Failed to update account");
-      })
-      .finally(() => {
         setLoading(false);
+        setError("Failed to update account");
       });
   }
 
@@ -47,6 +53,7 @@ export default function UpdateProfile() {
       id="main-container"
       className="d-flex align-items-center justify-content-center"
     >
+      <Background />
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body>

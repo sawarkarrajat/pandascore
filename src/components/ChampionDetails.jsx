@@ -1,7 +1,16 @@
 import React from "react";
 import ReactDom from "react-dom";
+import PropTypes from "prop-types";
 import "../styles/ChampionDetails.scss";
+/**
+ *
+ * @param {Object} props open, champion,onClose
+ */
 export default function ChampionDetails({ open, champion, onClose }) {
+  /**
+   * a condition to check if champion detail is triggered
+   * if triggered then a portal will be created on a different node
+   */
   if (!open) return null;
   return ReactDom.createPortal(
     <>
@@ -86,3 +95,9 @@ export default function ChampionDetails({ open, champion, onClose }) {
     document.getElementById("portal")
   );
 }
+
+ChampionDetails.propTypes = {
+  open: PropTypes.bool,
+  champion: PropTypes.object,
+  onClose: PropTypes.func,
+};

@@ -10,7 +10,13 @@ import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import { StateProvider } from "../contexts/StateProvider";
 import reducer, { initialState } from "../contexts/Reducer";
-
+/**
+ * @file App.js is the root file for this app containing all the routes and paths
+ * @author Rajat Sawarkar
+ */
+/**
+ * @property {Function} App the root method of the application containing routes and header
+ */
 function App() {
   return (
     <div className="App">
