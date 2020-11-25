@@ -1,4 +1,4 @@
-@use 'base';
+@import "_base.sass";
 
 .dashboard__userInfo {
   position: absolute;
@@ -10,6 +10,7 @@
 
 .dashboard__mainSection {
   @extend %d-flex-c;
+  @include fadeanimation;
   padding: 2em 8em 0em 8em;
   width: 100%;
   height: auto;

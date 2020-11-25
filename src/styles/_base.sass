@@ -1,16 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;500;600;700;800&display=swap')
-$font: 'Baloo Tamma 2', cursive 
-$clr1: #45454d
-$clr2: #fc7fb2
-$clr3: #ffd5d5
-$clr4: #fff1e9
-$clr5: #a13355
-$shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)
-
+@mixin fadeanimation
+  animation: fadeInAnimation ease 2s 
+  animation-iteration-count: 1
+  animation-fill-mode: forwards
+  @keyframes fadeInAnimation  
+    0% 
+      opacity: 0
+    100% 
+      opacity: 1
 
 *
   box-sizing: border-box
 
+body 
+  @include fadeanimation
+     
 %d-flex-r
   display: flex !important
   flex-direction: row
@@ -22,3 +25,4 @@ $shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px
   flex-direction: column
   justify-content: center
   align-items: center
+

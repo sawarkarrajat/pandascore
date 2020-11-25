@@ -60,7 +60,7 @@ export default function UpdateProfile() {
             <h2 className="text-center mb-4">Update Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
+              <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
@@ -69,7 +69,7 @@ export default function UpdateProfile() {
                   defaultValue={currentUser.email}
                 />
               </Form.Group>
-              <Form.Group id="password">
+              <Form.Group>
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"

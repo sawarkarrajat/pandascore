@@ -1,6 +1,7 @@
-@use 'base';
+@import "_base.sass";
 
 .dashboard__displayTable.watchlist__table {
+  @include fadeanimation;
   table {
     th {
       cursor: not-allowed;
