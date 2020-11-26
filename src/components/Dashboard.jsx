@@ -6,7 +6,6 @@ import "../styles/Dashboard.scss";
 import Userpanel from "./Userpanel";
 import { useStateValue } from "./../contexts/StateProvider";
 import ChampionDetails from "./ChampionDetails";
-
 export default function Dashboard() {
   const [initialResult, setInitialResult] = useState([]);
   const [error, setError] = useState("");
@@ -30,7 +29,14 @@ export default function Dashboard() {
   const [pageContainer, setPageContainer] = useState([]);
   const [currentPage, setCurrentPage] = useState(current_Page);
   const [totalNoOfPages, setTotalNoOfPages] = useState();
-
+  const tableHeaders = {
+    name: "name",
+    armor: "armor",
+    attackdamage: "attack damage",
+    attackrange: "attack range",
+    hpperlevel: " hp / level",
+    spellblock: "spell block",
+  };
   /**
    * a method which updates the champions in context as well as
    * calculates pagination and puts data in container
@@ -305,42 +311,15 @@ export default function Dashboard() {
               <thead>
                 <tr>
                   <th>avatar</th>
-                  <th
-                    style={checkSortedUsing("name")}
-                    onClick={() => handleSort("name")}
-                  >
-                    name
-                  </th>
-                  <th
-                    style={checkSortedUsing("armor")}
-                    onClick={() => handleSort("armor")}
-                  >
-                    armor
-                  </th>
-                  <th
-                    style={checkSortedUsing("attackdamage")}
-                    onClick={() => handleSort("attackdamage")}
-                  >
-                    attack damage
-                  </th>
-                  <th
-                    style={checkSortedUsing("attackrange")}
-                    onClick={() => handleSort("attackrange")}
-                  >
-                    attack range
-                  </th>
-                  <th
-                    style={checkSortedUsing("hpperlevel")}
-                    onClick={() => handleSort("hpperlevel")}
-                  >
-                    hp / level
-                  </th>
-                  <th
-                    style={checkSortedUsing("spellblock")}
-                    onClick={() => handleSort("spellblock")}
-                  >
-                    spell block
-                  </th>
+                  {Object.entries(tableHeaders).map(([key, value]) => (
+                    <th
+                      key={key}
+                      style={checkSortedUsing(key)}
+                      onClick={() => handleSort(key)}
+                    >
+                      {value}
+                    </th>
+                  ))}
                   <th>watchlist</th>
                 </tr>
               </thead>
@@ -350,6 +329,7 @@ export default function Dashboard() {
                     <tr key={_champion.id}>
                       <td>
                         <img
+                          onClick={(e) => handleChampionDetails(e, _champion)}
                           src={_champion.image_url}
                           alt={_champion.name}
                           width="30px"
