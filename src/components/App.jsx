@@ -32,10 +32,6 @@ function App() {
             <PublicRoute path="/signup" component={SignUp} />
             <PublicRoute path="/login" component={Login} />
             <PublicRoute path="/forgot-password" component={ForgotPassword} />
-
-            {/* <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
-            <Route path="/forgot-password" component={ForgotPassword} /> */}
             <PrivateRoute path="/update-profile" component={UpdateProfile} />
           </AuthProvider>
         </Switch>

@@ -4,7 +4,6 @@
  * @returns {Promise}
  */
 export function initialFetch() {
-  console.log("in initial fetch");
   return fetch(
     "https://api.pandascore.co/lol/champions?&token=" +
       process.env.REACT_APP_PANDASCORE_API_KEY

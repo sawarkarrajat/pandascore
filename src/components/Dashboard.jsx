@@ -30,6 +30,14 @@ export default function Dashboard() {
   const [pageContainer, setPageContainer] = useState([]);
   const [currentPage, setCurrentPage] = useState(current_Page);
   const [totalNoOfPages, setTotalNoOfPages] = useState();
+  const tableHeaders = {
+    name: "name",
+    armor: "armor",
+    attackdamage: "attack damage",
+    attackrange: "attack range",
+    hpperlevel: " hp / level",
+    spellblock: "spell block",
+  };
   /**
    * a method which updates the champions in context as well as
    * calculates pagination and puts data in container
@@ -81,7 +89,6 @@ export default function Dashboard() {
     setLoading(true);
     try {
       initialFetch().then((result) => {
-        console.log("value in result", result);
         setChampions(result);
         setInitialResult(result);
       });
@@ -98,7 +105,6 @@ export default function Dashboard() {
    * champion data alteration
    */
   useEffect(() => {
-    console.log("in useeffect pagination");
     paginationSequence();
   }, [champions, paginationSequence]);
 
@@ -119,7 +125,6 @@ export default function Dashboard() {
     e.preventDefault();
     setSearchText(e.target.value);
     searchSequence(e.target.value);
-    console.log("handle search method", searchText);
   }
 
   /**
@@ -136,7 +141,6 @@ export default function Dashboard() {
       setError("");
       setLoading(true);
       searchFetch(searchedText).then((results) => {
-        console.log("search results", results);
         setChampions(results);
       });
     } catch (error) {
@@ -154,16 +158,13 @@ export default function Dashboard() {
    */
   const handleSort = (key_to_sort_by) => {
     setLoading(true);
-    console.log("handlesort called", key_to_sort_by);
     //method that sorts champions
     const sortByKey = (a, b) => {
       let x = a[key_to_sort_by];
       let y = b[key_to_sort_by];
       if (sortingOrder === "asc") {
-        console.log("sorting in asc order");
         return x < y ? -1 : x > y ? 1 : 0;
       } else {
-        console.log("sorting in desc order");
         return x > y ? -1 : x < y ? 1 : 0;
       }
     };
@@ -185,7 +186,6 @@ export default function Dashboard() {
       type: "UPDATE_SORTEDUSING",
       payload: key_to_sort_by,
     });
-    console.log(sortedChampions);
     setLoading(false);
   };
 
@@ -312,42 +312,14 @@ export default function Dashboard() {
               <thead>
                 <tr>
                   <th>avatar</th>
-                  <th
-                    style={checkSortedUsing("name")}
-                    onClick={() => handleSort("name")}
-                  >
-                    name
-                  </th>
-                  <th
-                    style={checkSortedUsing("armor")}
-                    onClick={() => handleSort("armor")}
-                  >
-                    armor
-                  </th>
-                  <th
-                    style={checkSortedUsing("attackdamage")}
-                    onClick={() => handleSort("attackdamage")}
-                  >
-                    attack damage
-                  </th>
-                  <th
-                    style={checkSortedUsing("attackrange")}
-                    onClick={() => handleSort("attackrange")}
-                  >
-                    attack range
-                  </th>
-                  <th
-                    style={checkSortedUsing("hpperlevel")}
-                    onClick={() => handleSort("hpperlevel")}
-                  >
-                    hp / level
-                  </th>
-                  <th
-                    style={checkSortedUsing("spellblock")}
-                    onClick={() => handleSort("spellblock")}
-                  >
-                    spell block
-                  </th>
+                  {Object.entries(tableHeaders).forEach(([key, value]) => (
+                    <th
+                      style={checkSortedUsing(key)}
+                      onClick={() => handleSort(key)}
+                    >
+                      {value}
+                    </th>
+                  ))}
                   <th>watchlist</th>
                 </tr>
               </thead>
