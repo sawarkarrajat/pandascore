@@ -7,7 +7,8 @@ const PANDASCORE_API_KEY =
  */
 export function initialFetch() {
   return fetch(
-    ` https://api.pandascore.co/lol/champions?&token=${PANDASCORE_API_KEY}`
+    ` https://api.pandascore.co/lol/champions?&token=${PANDASCORE_API_KEY}`,
+    { mode: "cors" }
   ).then((response) => response.json());
 }
 
@@ -18,6 +19,7 @@ export function initialFetch() {
  */
 export function searchFetch(searchedText) {
   return fetch(
-    `https://api.pandascore.co/lol/champions?&search[name]=${searchedText}&token=${PANDASCORE_API_KEY}`
+    `https://api.pandascore.co/lol/champions?&search[name]=${searchedText}&token=${PANDASCORE_API_KEY}`,
+    { mode: "cors" }
   ).then((response) => response.json());
 }
