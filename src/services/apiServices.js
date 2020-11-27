@@ -6,9 +6,8 @@ const PANDASCORE_API_KEY =
  * @returns {Promise}
  */
 export function initialFetch() {
-  return fetch(
-    ` https://api.pandascore.co/lol/champions?&token=${PANDASCORE_API_KEY}`
-  ).then((response) => response.json());
+  const url = ` https://api.pandascore.co/lol/champions?&token=${PANDASCORE_API_KEY}`;
+  return fetch(url).then((response) => response.json());
 }
 
 /**
@@ -17,7 +16,6 @@ export function initialFetch() {
  * @returns {Promise}
  */
 export function searchFetch(searchedText) {
-  return fetch(
-    `https://api.pandascore.co/lol/champions?&search[name]=${searchedText}&token=${PANDASCORE_API_KEY}`
-  ).then((response) => response.json());
+  const url = `https://api.pandascore.co/lol/champions?&search[name]=${searchedText}&token=${PANDASCORE_API_KEY}`;
+  return fetch(url).then((response) => response.json());
 }
