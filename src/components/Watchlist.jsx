@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { rAction } from "../contexts/Reducer";
 import "../styles/Dashboard.scss";
 import "../styles/Watchlist.scss";
 import { useStateValue } from "./../contexts/StateProvider";
 import ChampionDetails from "./ChampionDetails";
+import Userpanel from "./Userpanel";
 /**
  * watchlist component
  * @property {Function}
@@ -30,7 +32,7 @@ function Watchlist() {
    */
   const handleRemove = (id) => {
     dispatch({
-      type: "REMOVE_CHAMPION_FROM_WATCHLIST",
+      type: rAction.removeChampionFromWatchlist,
       payload: id,
     });
   };
@@ -55,6 +57,7 @@ function Watchlist() {
         }}
         champion={clickedChampion}
       />
+      <Userpanel />
       <div className="dashboard__mainSection">
         <div className="dashboard__searchPanel">
           <Button variant="dark" onClick={(e) => handleDashboard(e)}>

@@ -10,14 +10,15 @@
 
 .dashboard__mainSection {
   @extend %d-flex-c;
-  @include fadeanimation;
   padding: 2em 8em 0em 8em;
   width: 100%;
   height: auto;
   justify-content: flex-start;
   align-items: flex-start;
 }
-
+.dashboard__animated {
+  @include fadeanimation;
+}
 .dashboard__searchPanel {
   @extend %d-flex-r;
   width: 100%;

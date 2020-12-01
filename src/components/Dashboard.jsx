@@ -6,6 +6,7 @@ import "../styles/Dashboard.scss";
 import Userpanel from "./Userpanel";
 import { useStateValue } from "./../contexts/StateProvider";
 import ChampionDetails from "./ChampionDetails";
+import { rAction } from "../contexts/Reducer";
 export default function Dashboard() {
   const [initialResult, setInitialResult] = useState([]);
   const [error, setError] = useState("");
@@ -43,7 +44,7 @@ export default function Dashboard() {
    */
   const paginationSequence = useCallback(() => {
     dispatch({
-      type: "UPDATE_CHAMPIONS",
+      type: rAction.updateChampions,
       payload: champions,
     });
     setTotalNoOfPages(Math.ceil(champions.length / 10));
@@ -74,7 +75,7 @@ export default function Dashboard() {
   const handlePagination = (index) => {
     setCurrentPage(index);
     dispatch({
-      type: "UPDATE_CURRENTPAGE",
+      type: rAction.updateCurrentPage,
       payload: index,
     });
   };
@@ -133,7 +134,7 @@ export default function Dashboard() {
    */
   const searchSequence = (searchedText) => {
     dispatch({
-      type: "UPDATE_SEARCHEDTERM",
+      type: rAction.updateSearchedTerm,
       payload: searchedText,
     });
     try {
@@ -171,18 +172,18 @@ export default function Dashboard() {
     setChampions(sortedChampions);
     if (sortingOrder === "asc") {
       dispatch({
-        type: "UPDATE_SORTINGORDER",
+        type: rAction.updateSortingOrder,
         payload: "desc",
       });
     } else {
       dispatch({
-        type: "UPDATE_SORTINGORDER",
+        type: rAction.updateSortingOrder,
         payload: "asc",
       });
     }
     paginationSequence();
     dispatch({
-      type: "UPDATE_SORTEDUSING",
+      type: rAction.updateSortedUsing,
       payload: key_to_sort_by,
     });
     setLoading(false);
@@ -215,16 +216,24 @@ export default function Dashboard() {
   const handleAddRemove = (champ) => {
     if (selectedChampions.some((item) => item.id === champ.id)) {
       dispatch({
-        type: "REMOVE_CHAMPION_FROM_WATCHLIST",
+        type: rAction.removeChampionFromWatchlist,
         payload: champ.id,
       });
     } else {
       dispatch({
-        type: "ADD_CHAMPION_TO_WATCHLIST",
+        type: rAction.addChampionToWatchlist,
         payload: champ,
       });
     }
   };
+
+  useEffect(() => {
+    console.log("selected champions", selectedChampions);
+    localStorage.setItem(
+      "selectedChampions",
+      JSON.stringify(selectedChampions)
+    );
+  }, [selectedChampions]);
 
   /**
    * handles clearing of text search input and dispatches
@@ -234,7 +243,7 @@ export default function Dashboard() {
   const handleClearText = (e) => {
     e.preventDefault();
     dispatch({
-      type: "UPDATE_SEARCHEDTERM",
+      type: rAction.updateSearchedTerm,
       payload: "",
     });
     setChampions(initialResult);
@@ -276,7 +285,7 @@ export default function Dashboard() {
         champion={clickedChampion}
       />
       <Userpanel />
-      <div className="dashboard__mainSection">
+      <div className="dashboard__mainSection dashboard__animated">
         <div className="dashboard__searchPanel">
           <Button variant="dark" onClick={handleWatchlist}>
             go to Watchlist&nbsp;

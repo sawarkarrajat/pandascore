@@ -3,6 +3,8 @@ import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "../styles/Dashboard.scss";
+import { rAction } from "../contexts/Reducer";
+import { useStateValue } from "./../contexts/StateProvider";
 /**
  * userPanel component contains current user and logout and update profile buttons
  * @property {Function}
@@ -10,6 +12,7 @@ import "../styles/Dashboard.scss";
 export default function Userpanel() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
+  const [, dispatch] = useStateValue();
   const history = useHistory();
   /**
    * handles the logging out process
@@ -19,6 +22,10 @@ export default function Userpanel() {
     setError("");
     try {
       await logout();
+      localStorage.removeItem("selectedChampions");
+      await dispatch({
+        type: rAction.logout,
+      });
       history.push("/login");
     } catch {
       setError("Failed to log out");

@@ -9,6 +9,16 @@ export const initialState = {
   sortedUsing: "",
   sortingOrder: "asc",
 };
+export const rAction = {
+  updateChampions: "UPDATE_CHAMPIONS",
+  updateSearchedTerm: "UPDATE_SEARCHEDTERM",
+  updateSortedUsing: "UPDATE_SORTEDUSING",
+  updateSortingOrder: "UPDATE_SORTINGORDER",
+  updateCurrentPage: "UPDATE_CURRENTPAGE",
+  removeChampionFromWatchlist: "REMOVE_CHAMPION_FROM_WATCHLIST",
+  addChampionToWatchlist: "ADD_CHAMPION_TO_WATCHLIST",
+  logout: "LOGOUT",
+};
 /**
  * a Reducer to maintain global state with the help of
  * actions
@@ -54,6 +64,12 @@ const Reducer = (state, action) => {
       return {
         ...state,
         selectedChampions: [...state.selectedChampions, action.payload],
+      };
+    case "LOGOUT":
+      console.log("in logot action", initialState);
+      return {
+        ...initialState,
+        selectedChampions: [],
       };
 
     default:
