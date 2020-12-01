@@ -21,7 +21,6 @@ import reducer, { initialState } from "../contexts/Reducer";
  */
 function App() {
   useEffect(() => {
-    console.log("in effect set intial");
     if (localStorage.getItem("selectedChampions")) {
       initialState.selectedChampions = JSON.parse(
         localStorage.getItem("selectedChampions")

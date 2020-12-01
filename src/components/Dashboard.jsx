@@ -228,7 +228,6 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    console.log("selected champions", selectedChampions);
     localStorage.setItem(
       "selectedChampions",
       JSON.stringify(selectedChampions)
@@ -285,7 +284,7 @@ export default function Dashboard() {
         champion={clickedChampion}
       />
       <Userpanel />
-      <div className="dashboard__mainSection dashboard__animated">
+      <div className="dashboard__mainSection">
         <div className="dashboard__searchPanel">
           <Button variant="dark" onClick={handleWatchlist}>
             go to Watchlist&nbsp;

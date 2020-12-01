@@ -66,7 +66,6 @@ const Reducer = (state, action) => {
         selectedChampions: [...state.selectedChampions, action.payload],
       };
     case "LOGOUT":
-      console.log("in logot action", initialState);
       return {
         ...initialState,
         selectedChampions: [],

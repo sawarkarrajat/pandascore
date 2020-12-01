@@ -34,7 +34,7 @@ import "../styles/Dashboard.scss";
 import Userpanel from "./Userpanel";
 import { useStateValue } from "./../contexts/StateProvider";
 import ChampionDetails from "./ChampionDetails";
-
+import { rAction } from "../contexts/Reducer";
 export default function Dashboard() {
   const [initialResult, setInitialResult] = useState([]);
   const [error, setError] = useState("");
@@ -58,13 +58,21 @@ export default function Dashboard() {
   const [pageContainer, setPageContainer] = useState([]);
   const [currentPage, setCurrentPage] = useState(current_Page);
   const [totalNoOfPages, setTotalNoOfPages] = useState();
+  const tableHeaders = {
+    name: "name",
+    armor: "armor",
+    attackdamage: "attack damage",
+    attackrange: "attack range",
+    hpperlevel: " hp / level",
+    spellblock: "spell block",
+  };
   /**
    * a method which updates the champions in context as well as
    * calculates pagination and puts data in container
    */
   const paginationSequence = useCallback(() => {
     dispatch({
-      type: "UPDATE_CHAMPIONS",
+      type: rAction.updateChampions,
       payload: champions,
     });
     setTotalNoOfPages(Math.ceil(champions.length / 10));
@@ -95,7 +103,7 @@ export default function Dashboard() {
   const handlePagination = (index) => {
     setCurrentPage(index);
     dispatch({
-      type: "UPDATE_CURRENTPAGE",
+      type: rAction.updateCurrentPage,
       payload: index,
     });
   };
@@ -109,7 +117,6 @@ export default function Dashboard() {
     setLoading(true);
     try {
       initialFetch().then((result) => {
-        console.log("value in result", result);
         setChampions(result);
         setInitialResult(result);
       });
@@ -126,7 +133,6 @@ export default function Dashboard() {
    * champion data alteration
    */
   useEffect(() => {
-    console.log("in useeffect pagination");
     paginationSequence();
   }, [champions, paginationSequence]);
 
@@ -147,7 +153,6 @@ export default function Dashboard() {
     e.preventDefault();
     setSearchText(e.target.value);
     searchSequence(e.target.value);
-    console.log("handle search method", searchText);
   }
 
   /**
@@ -157,14 +162,13 @@ export default function Dashboard() {
    */
   const searchSequence = (searchedText) => {
     dispatch({
-      type: "UPDATE_SEARCHEDTERM",
+      type: rAction.updateSearchedTerm,
       payload: searchedText,
     });
     try {
       setError("");
       setLoading(true);
       searchFetch(searchedText).then((results) => {
-        console.log("search results", results);
         setChampions(results);
       });
     } catch (error) {
@@ -182,16 +186,13 @@ export default function Dashboard() {
    */
   const handleSort = (key_to_sort_by) => {
     setLoading(true);
-    console.log("handlesort called", key_to_sort_by);
     //method that sorts champions
     const sortByKey = (a, b) => {
       let x = a[key_to_sort_by];
       let y = b[key_to_sort_by];
       if (sortingOrder === "asc") {
-        console.log("sorting in asc order");
         return x &lt; y ? -1 : x > y ? 1 : 0;
       } else {
-        console.log("sorting in desc order");
         return x > y ? -1 : x &lt; y ? 1 : 0;
       }
     };
@@ -199,21 +200,20 @@ export default function Dashboard() {
     setChampions(sortedChampions);
     if (sortingOrder === "asc") {
       dispatch({
-        type: "UPDATE_SORTINGORDER",
+        type: rAction.updateSortingOrder,
         payload: "desc",
       });
     } else {
       dispatch({
-        type: "UPDATE_SORTINGORDER",
+        type: rAction.updateSortingOrder,
         payload: "asc",
       });
     }
     paginationSequence();
     dispatch({
-      type: "UPDATE_SORTEDUSING",
+      type: rAction.updateSortedUsing,
       payload: key_to_sort_by,
     });
-    console.log(sortedChampions);
     setLoading(false);
   };
 
@@ -244,16 +244,23 @@ export default function Dashboard() {
   const handleAddRemove = (champ) => {
     if (selectedChampions.some((item) => item.id === champ.id)) {
       dispatch({
-        type: "REMOVE_CHAMPION_FROM_WATCHLIST",
+        type: rAction.removeChampionFromWatchlist,
         payload: champ.id,
       });
     } else {
       dispatch({
-        type: "ADD_CHAMPION_TO_WATCHLIST",
+        type: rAction.addChampionToWatchlist,
         payload: champ,
       });
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem(
+      "selectedChampions",
+      JSON.stringify(selectedChampions)
+    );
+  }, [selectedChampions]);
 
   /**
    * handles clearing of text search input and dispatches
@@ -263,7 +270,7 @@ export default function Dashboard() {
   const handleClearText = (e) => {
     e.preventDefault();
     dispatch({
-      type: "UPDATE_SEARCHEDTERM",
+      type: rAction.updateSearchedTerm,
       payload: "",
     });
     setChampions(initialResult);
@@ -340,42 +347,15 @@ export default function Dashboard() {
               &lt;thead>
                 &lt;tr>
                   &lt;th>avatar&lt;/th>
-                  &lt;th
-                    style={checkSortedUsing("name")}
-                    onClick={() => handleSort("name")}
-                  >
-                    name
-                  &lt;/th>
-                  &lt;th
-                    style={checkSortedUsing("armor")}
-                    onClick={() => handleSort("armor")}
-                  >
-                    armor
-                  &lt;/th>
-                  &lt;th
-                    style={checkSortedUsing("attackdamage")}
-                    onClick={() => handleSort("attackdamage")}
-                  >
-                    attack damage
-                  &lt;/th>
-                  &lt;th
-                    style={checkSortedUsing("attackrange")}
-                    onClick={() => handleSort("attackrange")}
-                  >
-                    attack range
-                  &lt;/th>
-                  &lt;th
-                    style={checkSortedUsing("hpperlevel")}
-                    onClick={() => handleSort("hpperlevel")}
-                  >
-                    hp / level
-                  &lt;/th>
-                  &lt;th
-                    style={checkSortedUsing("spellblock")}
-                    onClick={() => handleSort("spellblock")}
-                  >
-                    spell block
-                  &lt;/th>
+                  {Object.entries(tableHeaders).map(([key, value]) => (
+                    &lt;th
+                      key={key}
+                      style={checkSortedUsing(key)}
+                      onClick={() => handleSort(key)}
+                    >
+                      {value}
+                    &lt;/th>
+                  ))}
                   &lt;th>watchlist&lt;/th>
                 &lt;/tr>
               &lt;/thead>
@@ -385,6 +365,7 @@ export default function Dashboard() {
                     &lt;tr key={_champion.id}>
                       &lt;td>
                         &lt;img
+                          onClick={(e) => handleChampionDetails(e, _champion)}
                           src={_champion.image_url}
                           alt={_champion.name}
                           width="30px"
@@ -486,13 +467,13 @@ export default function Dashboard() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#initialFetch">initialFetch</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#searchFetch">searchFetch</a></li><li><a href="global.html#StateContext">StateContext</a></li><li><a href="global.html#StateProvider">StateProvider</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useStateValue">useStateValue</a></li><li><a href="global.html#Watchlist">Watchlist</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#AuthProvider">AuthProvider</a></li><li><a href="global.html#initialFetch">initialFetch</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#PrivateRoute">PrivateRoute</a></li><li><a href="global.html#PublicRoute">PublicRoute</a></li><li><a href="global.html#Reducer">Reducer</a></li><li><a href="global.html#searchFetch">searchFetch</a></li><li><a href="global.html#StateContext">StateContext</a></li><li><a href="global.html#StateProvider">StateProvider</a></li><li><a href="global.html#useAuth">useAuth</a></li><li><a href="global.html#useStateValue">useStateValue</a></li><li><a href="global.html#Watchlist">Watchlist</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Nov 24 2020 23:29:45 GMT+0530 (India Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 01 2020 18:23:38 GMT+0530 (India Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
