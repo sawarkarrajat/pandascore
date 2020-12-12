@@ -16,6 +16,7 @@ export const rAction = {
   updateSortingOrder: "UPDATE_SORTINGORDER",
   updateCurrentPage: "UPDATE_CURRENTPAGE",
   removeChampionFromWatchlist: "REMOVE_CHAMPION_FROM_WATCHLIST",
+  removeAllChampionsFromWatchlist: "REMOVE_ALL_CHAMPIONS_FROM_WATCHLIST",
   addChampionToWatchlist: "ADD_CHAMPION_TO_WATCHLIST",
   logout: "LOGOUT",
 };
@@ -28,44 +29,49 @@ export const rAction = {
  */
 const Reducer = (state, action) => {
   switch (action.type) {
-    case "UPDATE_CHAMPIONS":
+    case rAction.updateChampions:
       return {
         ...state,
         championsArray: action.payload,
       };
-    case "UPDATE_SEARCHEDTERM":
+    case rAction.updateSearchedTerm:
       return {
         ...state,
         searchedTerm: action.payload,
       };
-    case "UPDATE_SORTEDUSING":
+    case rAction.updateSortedUsing:
       return {
         ...state,
         sortedUsing: action.payload,
       };
-    case "UPDATE_SORTINGORDER":
+    case rAction.updateSortingOrder:
       return {
         ...state,
         sortingOrder: action.payload,
       };
-    case "UPDATE_CURRENTPAGE":
+    case rAction.updateCurrentPage:
       return {
         ...state,
         current_Page: action.payload,
       };
-    case "REMOVE_CHAMPION_FROM_WATCHLIST":
+    case rAction.removeChampionFromWatchlist:
       return {
         ...state,
         selectedChampions: state.selectedChampions.filter(
           (champion) => champion.id !== action.payload
         ),
       };
-    case "ADD_CHAMPION_TO_WATCHLIST":
+    case rAction.removeAllChampionsFromWatchlist:
+      return {
+        ...state,
+        selectedChampions:[],
+      };
+    case rAction.addChampionToWatchlist:
       return {
         ...state,
         selectedChampions: [...state.selectedChampions, action.payload],
       };
-    case "LOGOUT":
+    case rAction.logout:
       return {
         ...initialState,
         selectedChampions: [],

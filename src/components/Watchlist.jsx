@@ -47,6 +47,13 @@ function Watchlist() {
     setOpen(true);
     setClickedChampion(champ);
   };
+
+  const handleClearWatchlist = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: rAction.removeAllChampionsFromWatchlist,
+    });
+  }
   return (
     <>
       <ChampionDetails
@@ -62,6 +69,9 @@ function Watchlist() {
         <div className="dashboard__searchPanel">
           <Button variant="dark" onClick={(e) => handleDashboard(e)}>
             go to Dashboard
+          </Button>
+          <Button variant="danger" onClick={(e) => handleClearWatchlist(e)} disabled={selectedChampions?.length===0}>
+            clear watchlist
           </Button>
         </div>
         {selectedChampions.length > 0 ? (

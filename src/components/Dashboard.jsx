@@ -112,9 +112,10 @@ export default function Dashboard() {
    * a side effect used to fetch data on initial app load.
    */
   useEffect(() => {
-    //to check if history already exists before fetching
-    if (championsArray.length === 0) fetchData();
-  }, [championsArray.length]);
+    //initial fetch to display champions in app
+    fetchData();
+  }, []);
+
 
   /**
    * updater function for search input and initiates side effect
@@ -286,7 +287,7 @@ export default function Dashboard() {
       <Userpanel />
       <div className="dashboard__mainSection">
         <div className="dashboard__searchPanel">
-          <Button variant="dark" onClick={handleWatchlist}>
+          <Button variant="dark" onClick={handleWatchlist}  disabled={selectedChampions?.length===0}>
             go to Watchlist&nbsp;
             <Badge variant="light">{selectedChampions.length}</Badge>
           </Button>
