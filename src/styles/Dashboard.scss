@@ -55,6 +55,9 @@
       color: darkblue;
       cursor: pointer;
     }
+    th:nth-child(2) {
+      width: 200px;
+    }
     th:hover {
       // border-radius: 8px;
       background: #3a81f52d;
@@ -75,10 +78,6 @@
       background: #dedede31;
     }
   }
-}
-
-.dashboard__displayTable table > tbody > tr > td:nth-child(2) {
-  text-align: left;
 }
 
 .dashboard__pagination {

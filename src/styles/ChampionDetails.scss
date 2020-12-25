@@ -31,6 +31,12 @@
 }
 .championDetails__img {
   height: inherit;
+  width: 100%;
+  background: url("https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-clip: inherit;
+  background-size: 100% 100%;
   border-radius: 8px;
   box-shadow: 0 0px 20px 20px #007bff69;
 }
