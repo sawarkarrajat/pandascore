@@ -7,6 +7,9 @@ import Userpanel from "./Userpanel";
 import { useStateValue } from "./../contexts/StateProvider";
 import ChampionDetails from "./ChampionDetails";
 import { rAction } from "../contexts/Reducer";
+import upIcon from "../assets/up.svg";
+import downIcon from "../assets/down.svg";
+import sortIcon from "../assets/sort.svg";
 export default function Dashboard() {
   const [initialResult, setInitialResult] = useState([]);
   const [error, setError] = useState("");
@@ -84,21 +87,23 @@ export default function Dashboard() {
    * used to fetch data on initial load
    * @property {Function}
    */
-  const fetchData = () => {
-    setError("");
-    setLoading(true);
-    try {
-      initialFetch().then((result) => {
-        setChampions(result);
-        setInitialResult(result);
-      });
-    } catch (err) {
-      setError(err);
-      console.error(err);
-    } finally {
-      setLoading(false);
+  const fetchData = useCallback(() => {
+    if (championsArray.length === 0) {
+      setError("");
+      setLoading(true);
+      try {
+        initialFetch().then((result) => {
+          setChampions(result);
+          setInitialResult(result);
+        });
+      } catch (err) {
+        setError(err);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     }
-  };
+  }, [championsArray.length]);
 
   /**
    * a side effect to trigger pagination sequence on
@@ -114,8 +119,7 @@ export default function Dashboard() {
   useEffect(() => {
     //initial fetch to display champions in app
     fetchData();
-  }, []);
-
+  }, [fetchData]);
 
   /**
    * updater function for search input and initiates side effect
@@ -274,6 +278,17 @@ export default function Dashboard() {
       return style;
     }
   };
+  const showIcon = (tag) => {
+    if (sortedUsing === tag) {
+      if (sortingOrder === "asc") {
+        return <img src={downIcon} alt="downicon" width="10px" />;
+      } else {
+        return <img src={upIcon} alt="upicon" width="10px" />;
+      }
+    } else {
+      return <img src={sortIcon} alt="sorticon" width="10px" />;
+    }
+  };
   return (
     <>
       <ChampionDetails
@@ -287,7 +302,11 @@ export default function Dashboard() {
       <Userpanel />
       <div className="dashboard__mainSection">
         <div className="dashboard__searchPanel">
-          <Button variant="dark" onClick={handleWatchlist}  disabled={selectedChampions?.length===0}>
+          <Button
+            variant="dark"
+            onClick={handleWatchlist}
+            disabled={selectedChampions?.length === 0}
+          >
             go to Watchlist&nbsp;
             <Badge variant="light">{selectedChampions.length}</Badge>
           </Button>
@@ -326,7 +345,7 @@ export default function Dashboard() {
                       style={checkSortedUsing(key)}
                       onClick={() => handleSort(key)}
                     >
-                      {value}
+                      {value} {showIcon(key)}
                     </th>
                   ))}
                   <th>watchlist</th>
