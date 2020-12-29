@@ -9,6 +9,9 @@ export const initialState = {
   sortedUsing: "",
   sortingOrder: "asc",
 };
+/**
+ * actions constants for autocomplete
+ */
 export const rAction = {
   updateChampions: "UPDATE_CHAMPIONS",
   updateSearchedTerm: "UPDATE_SEARCHEDTERM",
@@ -64,7 +67,7 @@ const Reducer = (state, action) => {
     case rAction.removeAllChampionsFromWatchlist:
       return {
         ...state,
-        selectedChampions:[],
+        selectedChampions: [],
       };
     case rAction.addChampionToWatchlist:
       return {

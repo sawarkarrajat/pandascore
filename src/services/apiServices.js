@@ -1,3 +1,4 @@
+const URL_CONSTANT = "https://api.pandascore.co/lol/champions?&";
 const PANDASCORE_API_KEY =
   "6xr3TElj5TMvO1KnMjvLY-lE1RE6pR4n_s-0BH356JJTccW4ees";
 /**
@@ -6,7 +7,7 @@ const PANDASCORE_API_KEY =
  * @returns {Promise}
  */
 export function initialFetch() {
-  const url = ` https://api.pandascore.co/lol/champions?&token=${PANDASCORE_API_KEY}`;
+  const url = `${URL_CONSTANT}token=${PANDASCORE_API_KEY}`;
   return fetch(url).then((response) => response.json());
 }
 
@@ -16,6 +17,6 @@ export function initialFetch() {
  * @returns {Promise}
  */
 export function searchFetch(searchedText) {
-  const url = `https://api.pandascore.co/lol/champions?&search[name]=${searchedText}&token=${PANDASCORE_API_KEY}`;
+  const url = `${URL_CONSTANT}search[name]=${searchedText}&token=${PANDASCORE_API_KEY}`;
   return fetch(url).then((response) => response.json());
 }
